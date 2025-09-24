@@ -1,0 +1,10 @@
+.git
+.gitignore
+Dockerfile*
+*.dockerfile
+*.tmp
+*.DS_Store
+.env
+.idea
+.vscode
+
