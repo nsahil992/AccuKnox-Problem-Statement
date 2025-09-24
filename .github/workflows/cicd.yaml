@@ -1,0 +1,35 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  
+  pull_request: 
+    branches: 
+      - master
+  workflow_dispatch:
+
+jobs:
+  CI:
+    name: Continuous Integration (hadolint-build-push-docker)
+    runs-on: [self-hosted]
+    env:
+      VERSION: ${{ secrets.SEMVER_VERSION }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Test Dockerfile
+        run: make hadolint
+
+      - name: Docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        run: |
+          make docker-build VERSION=${{ env.VERSION }}
+          make docker-push VERSION=${{ env.VERSION }}
