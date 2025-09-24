@@ -33,3 +33,5 @@ jobs:
         run: |
           make docker-build VERSION=${{ env.VERSION }}
           make docker-push VERSION=${{ env.VERSION }}
+
+          
