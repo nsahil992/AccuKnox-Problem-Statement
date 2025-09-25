@@ -47,7 +47,8 @@ jobs:
 
       - name: Deploy Wisecow
         run: |
-          sed "s|IMAGE_TAG|${VERSION}|g" Kubernetes/wisecow-deployment.yaml | kubectl apply -n wisecow -f -
-          kubectl apply -f Kubernetes/wisecow-service.yaml -n wisecow
+          sed "s|IMAGE_TAG|${VERSION}|g" Kubernetes/wisecow-deployment.yaml | \
+          kubectl apply -n wisecow -f - --validate=false
+
 
           
